@@ -1,13 +1,25 @@
 import { Card } from 'antd'
 import logo from '@/assets/logo.png'
-import { Form, Input, Button, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox , message} from 'antd'
 import './index.scss'
-// const onFinish = values => {
-//     console.log(values)
-//   }
+import { useDispatch } from 'react-redux'
+import { fetchLogin } from '@/store/modules/user'
+import { useNavigate } from 'react-router-dom'
+
 const Login = () => {
-    const onFinish = (values) =>{
+    
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const onFinish = async (values) =>{
         console.log(values)
+
+        // 触发异步函数 action fetchLogin
+        // console.log(dispatch(fetchLogin(values)),'22222');
+        await dispatch(fetchLogin(values))
+        // 跳转到首页
+        navigate('/')
+        // 提示一下用户
+        message.success('登录成功')
     }
      
   return (
@@ -17,7 +29,7 @@ const Login = () => {
         {/* 登录表单 */}
         <Form onFinish= {onFinish} validateTrigger= 'onBlur'  >
       <Form.Item 
-        name="username"
+        name="mobile"
         rules={[
             { 
                 required: true,
@@ -27,9 +39,7 @@ const Login = () => {
                 message: 'please input correct username'
             }
         
-        
-        
-        
+
         ]
         }
       >
@@ -37,7 +47,7 @@ const Login = () => {
 
       </Form.Item>
       <Form.Item
-        name="password"
+        name="code"
         rules={
             [{ required: true, message: 'Please input your password!' }]
          }
