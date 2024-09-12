@@ -12,20 +12,20 @@ const router =  createBrowserRouter([
     {
         path:"/",
         element  :<AuthRoute> <Layout /></AuthRoute>,
-        children:[
+        children: [
             {
                 path: 'home',
-                elment:<Home />
+                element:<Home />
 
             },
             {
                 path: 'article',
-                elment:<Article />
+                element:<Article />
 
             },
             {
                 path: 'publish',
-                elment:<Publish />
+                element:<Publish />
 
             },
 
@@ -33,11 +33,9 @@ const router =  createBrowserRouter([
     },
     {
         path:"/login",
-        element  :<Login/>
+        element  :<Login />
 
     },
-
-
 
 ]
 )  
