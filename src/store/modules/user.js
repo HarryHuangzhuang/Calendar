@@ -1,29 +1,39 @@
 //和用户相关的状态管理
 
 import {createSlice} from "@reduxjs/toolkit"
-import { request } from "@/utils"
+import { removeToken, request } from "@/utils"
 import { setToken as _setToken, getToken } from "@/utils"
 const userStore = createSlice ({
     name : "user",
     // 数据状态
     initialState: {
-        token: getToken() || ''
+        token: getToken() || '',
+        userInfo:{}
        
     },
     // 同步修改方法
     reducers :{
 
         setToken (state, action){
-            console.log('Token received in reducer:', action.payload);
+            // console.log('Token received in reducer:', action.payload);
             state.token = action.payload
             _setToken(action.payload)
         // 本地也存一份
-        localStorage.setItem('token_key',action.payload)
+             localStorage.setItem('token_key',action.payload)
+        },
+        setUserInfo(state,action){
+            state.userInfo = action.payload
+
+        },
+        clearUserInfo(state){
+            state.token = '';
+            state.userInfo= {};
+            removeToken()
         }
     }
 })
  // 解构出actionCreater
-const { setToken }  =  userStore.actions
+const { setToken ,setUserInfo , clearUserInfo}  =  userStore.actions
  // 获取reducer function
 
 const userReducer = userStore.reducer
@@ -41,6 +51,14 @@ const fetchLogin = (loginForm) =>{
         // console.log(res.data.token)
     }
 }
+// 获取个人用户异步方法
+const fetchUserInfo = () =>{
+    return  async (dispatch) => {
+       const res=  await request.get('/user/profile')
+    //    console.log(res.data.data)
+       dispatch(setUserInfo(res.data.data))
+    }
+}
 
-export { fetchLogin,  setToken }
+export { fetchLogin, fetchUserInfo, clearUserInfo, setToken }
 export default userReducer
