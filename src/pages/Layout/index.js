@@ -86,7 +86,7 @@ const name = useSelector(state =>state.user.userInfo.name)
           <Menu
             mode="inline"
             theme="dark"
-            selectedKeys={selectekey}
+            selectedKeys={[selectekey]}
             onClick={onMenuClick}
             items = {Items}
             style={{ height: '100%', borderRight: 0 }}

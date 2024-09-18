@@ -3,6 +3,7 @@
 import {createSlice} from "@reduxjs/toolkit"
 import { removeToken, request } from "@/utils"
 import { setToken as _setToken, getToken } from "@/utils"
+import { loginAPI, getProfileAPI } from "@/apis/user"
 const userStore = createSlice ({
     name : "user",
     // 数据状态
@@ -42,7 +43,7 @@ const userReducer = userStore.reducer
 const fetchLogin = (loginForm) =>{
     return  async (dispatch) => {
 // 1 发送异步请求
-        const res = await request.post('/authorizations', loginForm)
+        const res = await loginAPI(loginForm)
         // console.log('Full login response:', res); // 检查完整的响应对象
         // console.log('Login response data:', res.data.data);
 
@@ -54,7 +55,7 @@ const fetchLogin = (loginForm) =>{
 // 获取个人用户异步方法
 const fetchUserInfo = () =>{
     return  async (dispatch) => {
-       const res=  await request.get('/user/profile')
+       const res=  await getProfileAPI()
     //    console.log(res.data.data)
        dispatch(setUserInfo(res.data.data))
     }

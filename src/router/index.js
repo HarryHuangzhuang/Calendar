@@ -14,6 +14,10 @@ const router =  createBrowserRouter([
         element  :<AuthRoute> <Layout /></AuthRoute>,
         children: [
             {
+                index: true, // Default route renders Home component
+                element: <Home />
+              },
+            {
                 path: 'home',
                 element:<Home />
 
